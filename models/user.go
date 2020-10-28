@@ -8,7 +8,7 @@ import (
 	"errors"
 
 	d "github.com/tavvfiq/cafe-rest-api/database"
-	tb "github.com/tavvfiq/cafe-rest-api/database/mysql"
+	tb "github.com/tavvfiq/cafe-rest-api/interfaces"
 	bcrypt "golang.org/x/crypto/bcrypt"
 )
 

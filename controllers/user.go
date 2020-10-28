@@ -8,7 +8,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	ah "github.com/tavvfiq/cafe-rest-api/apiHelpers"
-	tb "github.com/tavvfiq/cafe-rest-api/database/mysql"
+	tb "github.com/tavvfiq/cafe-rest-api/interfaces"
 	"github.com/tavvfiq/cafe-rest-api/models"
 )
 
@@ -30,7 +30,7 @@ func RegisterHandler(ctx echo.Context) error {
 		log.Fatal(err)
 		return ctx.JSON(http.StatusNoContent, ah.ErrorResponse{Status: http.StatusNoContent, Message: "Error registering user"})
 	}
-	return ctx.JSON(http.StatusOK, ah.SuccessResponse{Status: http.StatusOK, Message: "Register Success", Data: u})
+	return ctx.JSON(http.StatusOK, ah.UserSuccessResponse{Status: http.StatusOK, Message: "Register Success", Data: u})
 }
 
 // LoginHandler handler for login request
@@ -52,5 +52,5 @@ func LoginHandler(ctx echo.Context) error {
 		log.Fatal(err)
 		return ctx.JSON(http.StatusNoContent, ah.ErrorResponse{Status: http.StatusNoContent, Message: "Login Error"})
 	}
-	return ctx.JSON(http.StatusOK, ah.SuccessResponse{Status: http.StatusOK, Message: "Login Success", Data: u})
+	return ctx.JSON(http.StatusOK, ah.UserSuccessResponse{Status: http.StatusOK, Message: "Login Success", Data: u})
 }
