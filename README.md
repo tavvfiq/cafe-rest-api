@@ -1,2 +1,2 @@
 # cafe-rest-api
-RESTfull API for KeCafe Skuy! in Go
+RESTful API for KeCafe Skuy! in Go
