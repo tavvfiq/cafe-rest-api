@@ -30,5 +30,27 @@ func RegisterHandler(ctx echo.Context) error {
 		log.Fatal(err)
 		return ctx.JSON(http.StatusNoContent, ah.ErrorResponse{Status: http.StatusNoContent, Message: "Error registering user"})
 	}
-	return ctx.JSON(http.StatusOK, u)
+	return ctx.JSON(http.StatusOK, ah.SuccessResponse{Status: http.StatusOK, Message: "Register Success", Data: u})
+}
+
+// LoginHandler handler for login request
+func LoginHandler(ctx echo.Context) error {
+	l := new(tb.LoginReq)
+	u := tb.User{}
+
+	var err error
+
+	c, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	if err := ctx.Bind(l); err != nil {
+		log.Fatal(err)
+		return ctx.JSON(http.StatusNoContent, ah.ErrorResponse{Status: http.StatusNoContent, Message: "Login Error"})
+	}
+	u, err = models.LoginUser(c, l)
+	if err != nil {
+		log.Fatal(err)
+		return ctx.JSON(http.StatusNoContent, ah.ErrorResponse{Status: http.StatusNoContent, Message: "Login Error"})
+	}
+	return ctx.JSON(http.StatusOK, ah.SuccessResponse{Status: http.StatusOK, Message: "Login Success", Data: u})
 }
