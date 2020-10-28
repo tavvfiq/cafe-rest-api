@@ -3,30 +3,30 @@ package models
 import (
 	"log"
 
+	"context"
+
 	d "github.com/tavvfiq/cafe-rest-api/database"
 	tb "github.com/tavvfiq/cafe-rest-api/database/mysql"
 )
 
-// RegisterUser Registing user to the database
-func RegisterUser(b *tb.RegistReq) (tb.User, error) {
+// RegisterUser Registering user to the database
+func RegisterUser(c context.Context, b *tb.RegistReq) (tb.User, error) {
 	userTable := tb.User{}
-	stmt, err := d.DB.Prepare("INSERT INTO users SET ?")
-	if err != nil {
-		log.Fatal(err)
-		return tb.User{}, err
-	}
 
+	stmt, err := d.DB.Prepare("INSERT INTO users SET ?;")
+	if err != nil {
+		panic(err)
+	}
+	defer stmt.Close()
 	_, err = stmt.Exec(b)
 	if err != nil {
-		log.Fatal(err)
-		return tb.User{}, err
+		panic(err)
 	}
-	stmt.Close()
-	rows, err := d.DB.Query("SELECT id, first_name, last_name, phone_number, profile_image, level_id FROM users WHERE users.email=?;", "taufiqwidinugroho@gmail.com")
+	rows, err := d.DB.QueryContext(c, "SELECT id, first_name, last_name, phone_number, profile_image, level_id FROM users WHERE users.email=?;", b.Email)
 	if err != nil {
-		log.Fatal(err)
-		return tb.User{}, err
+		panic(err)
 	}
+	defer rows.Close()
 	for rows.Next() {
 		if err := rows.Scan(&userTable.FirstName, &userTable.LastName, &userTable.Email, &userTable.ProfileImage, &userTable.PhoneNumber, &userTable.LevelID); err != nil {
 			log.Fatal(err)
