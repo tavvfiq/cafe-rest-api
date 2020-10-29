@@ -23,12 +23,12 @@ func RegisterHandler(ctx echo.Context) error {
 
 	if err := ctx.Bind(r); err != nil {
 		log.Fatal(err)
-		return ctx.JSON(http.StatusNoContent, ah.ErrorResponse{Status: http.StatusNoContent, Message: "Error registering user"})
+		return ctx.JSON(http.StatusNoContent, ah.ErrorResponse{Status: http.StatusNoContent, Error: "Error registering user"})
 	}
 	u, err = models.RegisterUser(c, r)
 	if err != nil {
 		log.Fatal(err)
-		return ctx.JSON(http.StatusNoContent, ah.ErrorResponse{Status: http.StatusNoContent, Message: "Error registering user"})
+		return ctx.JSON(http.StatusNoContent, ah.ErrorResponse{Status: http.StatusNoContent, Error: "Error registering user"})
 	}
 	return ctx.JSON(http.StatusOK, ah.UserSuccessResponse{Status: http.StatusOK, Message: "Register Success", Data: u})
 }
@@ -45,12 +45,12 @@ func LoginHandler(ctx echo.Context) error {
 
 	if err := ctx.Bind(l); err != nil {
 		log.Fatal(err)
-		return ctx.JSON(http.StatusNoContent, ah.ErrorResponse{Status: http.StatusNoContent, Message: "Login Error"})
+		return ctx.JSON(http.StatusNoContent, ah.ErrorResponse{Status: http.StatusNoContent, Error: "Login Error"})
 	}
 	u, err = models.LoginUser(c, l)
 	if err != nil {
 		log.Fatal(err)
-		return ctx.JSON(http.StatusNoContent, ah.ErrorResponse{Status: http.StatusNoContent, Message: "Login Error"})
+		return ctx.JSON(http.StatusNoContent, ah.ErrorResponse{Status: http.StatusNoContent, Error: "Login Error"})
 	}
 	return ctx.JSON(http.StatusOK, ah.UserSuccessResponse{Status: http.StatusOK, Message: "Login Success", Data: u})
 }

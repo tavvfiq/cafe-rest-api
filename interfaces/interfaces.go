@@ -25,3 +25,22 @@ type User struct {
 	PhoneNumber  string `json:"phone_number"`
 	LevelID      int    `json:"level_id"`
 }
+
+// Menu menu returning struct
+type Menu struct {
+	ID        int    `json:"id"`
+	Name      string `json:"name"`
+	Image     string `json:"image_path"`
+	Price     string `json:"price"`
+	Quantity  string `json:"quantity"`
+	Category  string `json:"category"`
+	AddedAt   string `json:"added_at"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+// PageInfo page info for pagination
+type PageInfo struct {
+	PrevPage string `json:"prevPage"`
+	Page     int    `json:"page"`
+	NextPage string `json:"nextPage"`
+}

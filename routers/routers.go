@@ -22,5 +22,6 @@ func Start() {
 	// Routes
 	e.POST("/auth/register", c.RegisterHandler)
 	e.POST("/auth/login", c.LoginHandler)
+	e.GET("/menu", c.GetMenuHandler)
 	e.Logger.Fatal(e.Start(":8000"))
 }
