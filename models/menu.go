@@ -32,7 +32,8 @@ func GetMenu(c context.Context, query map[string]string) ([]tb.Menu, error) {
 	}
 	// offset calculation based on page and limit
 	offset := (page - 1) * limit
-	// concat search query  with '%query["search"]%'
+
+	// merge search query  with '%query["search"]%'
 	search := "'%" + query["search"] + "%'"
 
 	rows, err := d.DB.QueryContext(c, fmt.Sprintf("SELECT menu.id, menu.name, menu.image_path, menu.price, menu.quantity, category.category, menu.added_at, menu.updated_at FROM menu JOIN category ON menu.category_id = category.id WHERE menu.name LIKE %s AND category_id= ? ORDER BY menu.%s %s LIMIT ? OFFSET ?", search, query["sortby"], query["order"]), query["filter"], limit, offset)

@@ -11,7 +11,9 @@ import (
 func Start() {
 	e := echo.New()
 	// Middleware
-	e.Use(middleware.Logger())
+	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: "method=${method}\turi=${uri}\t\tstatus=${status}\n",
+	}))
 	e.Use(middleware.Recover())
 	//CORS
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
@@ -23,5 +25,7 @@ func Start() {
 	e.POST("/auth/register", c.RegisterHandler)
 	e.POST("/auth/login", c.LoginHandler)
 	e.GET("/menu", c.GetMenuHandler)
-	e.Logger.Fatal(e.Start(":8000"))
+
+	// Logger
+	e.Logger.Fatal(e.Start(":8001"))
 }
